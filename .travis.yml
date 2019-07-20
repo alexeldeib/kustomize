@@ -23,10 +23,6 @@ go:
 
 go_import_path: sigs.k8s.io/kustomize
 
-before_install:
-  - source ./travis/consider-early-travis-exit.sh
-  - curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh| sh -s -- -b $(go env GOPATH)/bin v1.17.1
-  - go get -u github.com/monopole/mdrip
   # The following would install Helm if needed for some reason.
   # - wget https://storage.googleapis.com/kubernetes-helm/helm-v2.13.1-linux-amd64.tar.gz
   # - tar -xvzf helm-v2.13.1-linux-amd64.tar.gz
@@ -35,9 +31,27 @@ before_install:
 # Skip the install process; let pre-commit.sh do it.
 install: true
 
-script:
-  - if [ $TRAVIS_OS_NAME = 'windows' ]; then ./travis/Invoke-PreCommit.ps1; else ./travis/pre-commit.sh; fi
-
 # TBD. Suppressing for now.
 notifications:
   email: false
+
+jobs:
+  include:
+  - stage: Test
+    os: linux
+    script:
+      - ./travis/pre-commit.sh
+    before_install:
+    - source ./travis/consider-early-travis-exit.sh
+    - curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh| sh -s -- -b $(go env GOPATH)/bin v1.17.1
+    - go get -u github.com/monopole/mdrip
+  - os: osx
+    script:
+      - ./travis/pre-commit.sh
+    before_install:
+    - source ./travis/consider-early-travis-exit.sh
+    - curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh| sh -s -- -b $(go env GOPATH)/bin v1.17.1
+    - go get -u github.com/monopole/mdrip
+  - os: windows
+    script:
+      - ./travis/Invoke-PreCommit.ps1
