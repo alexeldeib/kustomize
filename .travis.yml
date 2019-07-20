@@ -1,8 +1,7 @@
 os:
   - linux
   - osx
-# TODO: Uncomment when tests running on Windows.
-#  - windows
+  - windows
 
 addons:
   apt:
@@ -37,7 +36,7 @@ before_install:
 install: true
 
 script:
-  - ./travis/pre-commit.sh
+  - if [ $TRAVIS_OS_NAME = 'windows' ]; then ./travis/pre-commit.sh; else ./travis/Invoke-PreCommit.ps1; fi
 
 # TBD. Suppressing for now.
 notifications:
