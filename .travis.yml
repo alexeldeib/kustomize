@@ -43,7 +43,9 @@ notifications:
 matrix:
   include:
     - os: windows
-      script: ./travis/Invoke-PreCommit.ps1
+      script:
+      - powershell 
+      - powershell.exe ./travis/Invoke-PreCommit.ps1
     - os: linux
       script: ./travis/pre-commit.sh
     - os: linux
