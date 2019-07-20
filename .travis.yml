@@ -36,7 +36,7 @@ before_install:
 install: true
 
 script:
-  - if [ $TRAVIS_OS_NAME = 'windows' ]; then ./travis/pre-commit.sh; else ./travis/Invoke-PreCommit.ps1; fi
+  - if [ $TRAVIS_OS_NAME = 'windows' ]; then ./travis/Invoke-PreCommit.ps1; else ./travis/pre-commit.sh; fi
 
 # TBD. Suppressing for now.
 notifications:
