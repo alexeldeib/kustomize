@@ -14,6 +14,7 @@ import (
 	"strings"
 
 	"github.com/pkg/errors"
+	"github.com/sanity-io/litter"
 )
 
 var _ File = &fsNode{}
@@ -226,6 +227,7 @@ func (n *fsNode) CleanedAbs(path string) (ConfirmedDir, string, error) {
 		return "", "", errors.Wrap(err, "unable to clean")
 	}
 	if node == nil {
+		litter.Dump(n)
 		return "", "", fmt.Errorf("'%s' doesn't exist", path)
 	}
 	if node.isNodeADir() {
