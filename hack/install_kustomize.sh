@@ -17,7 +17,7 @@
 #
 # Fails if the file already exists.
 
-set -e
+set -ex
 
 where=$PWD
 
@@ -67,10 +67,6 @@ function readlink_f {
 }
 
 where="$(readlink_f $where)/"
-
-if [ "$where" != "/" ]; then 
-  where="$where/"
-fi
 
 if [ -f "${where}kustomize" ]; then
   echo "${where}kustomize exists. Remove it first."
